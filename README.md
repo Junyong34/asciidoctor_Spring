@@ -1,16 +1,18 @@
-Intermax Cloud API Server
+Manual
 ============
 
 ## 개요
-클라우드 모니터링의 API Server를 담당합니다.
-JAVA, Spring Boot 기반의 WEB Application입니다.
+Spring 기반 maven을 통한 asciidoctor 환경 설정
+html 파일 및 pdf 문서 생성
 
 ## 실행
 ```
-$ mvn spring-boot:run
+$ mvn install
+$ mvn package
 ```
 
-## Swagger
-Swagger를 이용해서 REST API를 테스트할 수 있습니다.
-
-http://{api-server}/swagger-ui.html
+## 설치방법
+1. https://maven.apache.org/download.cgi#
+2. window 버전 Binary zip archive 설치
+3. 환경변수 셋팅
+4. 명령어 실행 
