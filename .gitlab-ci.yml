@@ -1,0 +1,107 @@
+#image: docker:stable-git
+#
+#before_script:
+#  - export
+#
+#stages:
+#  - test
+#  - build
+#  - docker
+
+# variables:
+#   MAVEN_CLI_OPTS: "--batch-mode"
+#   MAVEN_OPTS: "-Dmaven.repo.local=/cache/maven.repository"
+
+# cache:
+#   key: "$CI_PROJECT_NAME"
+#   policy: pull-push
+#   paths:
+#     - /cache/maven.repository
+
+#maven-test:
+#  image: maven:latest
+#  stage: test
+#  script: mvn $MAVEN_CLI_OPTS clean test
+#  artifacts:
+#    reports:
+#      junit:
+#        - target/surefire-reports/TEST-*.xml
+#        - target/failsafe-reports/TEST-*.xml
+#  only:
+#    - merge_requests
+
+#maven-test-clover:
+#  image: maven:latest
+#  stage: test
+#  script: mvn $MAVEN_CLI_OPTS clean clover:setup test clover:aggregate clover:log clover:clover
+#  artifacts:
+#    reports:
+#      junit:
+#        - target/surefire-reports/TEST-*.xml
+#        - target/failsafe-reports/TEST-*.xml
+#  only:
+#    - develop
+#    - /^demo-[0-9a-zA-Z.]+$/
+#    - master
+
+#maven-build:
+#  image: maven:latest
+#  stage: build
+#  script: mvn $MAVEN_CLI_OPTS clean package -Dmaven.test.skip=true
+#  artifacts:
+#    paths:
+#      - target/*.jar
+#  only:
+#    - develop
+#    - /^demo-[0-9a-zA-Z.]+$/
+#
+#docker-build:
+#  services:
+#    - name: docker:latest
+#      #command: ["--insecure-registry", "10.10.31.202:5000"]
+#  stage: docker
+#  before_script:
+#    - docker info
+##    - export DOCKER_HOST='tcp://localhost:2375'  kubernetes
+##    - export DOCKER_HOST='tcp://docker:2375'
+##    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+#  script:
+#    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME" .
+#    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME"
+#  only:
+#    - develop
+#
+#docker-build-master:
+#  services:
+#    - name: docker:latest
+#    #docker:stable-dind docker in docker
+#      #command: ["--insecure-registry", "10.10.31.202:5000"]
+#  stage: docker
+#  before_script:
+#    - docker info
+##    - export DOCKER_HOST='tcp://localhost:2375'  kubernetes
+##    - export DOCKER_HOST='tcp://docker:2375'
+##    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+#  script:
+#    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME" .
+#    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME"
+#  only:
+#    - master
+#  when: manual
+#
+#
+#docker-build-demo:
+#  services:
+#    - name: docker:latest
+#      #command: ["--insecure-registry", "10.10.31.202:5000"]
+#  stage: docker
+#  before_script:
+#    - docker info
+##    - export DOCKER_HOST='tcp://localhost:2375'  kubernetes
+##    - export DOCKER_HOST='tcp://docker:2375'
+##    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+#  script:
+#    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME" .
+#    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME"
+#  only:
+#    - /^demo-[0-9a-zA-Z.]+$/
